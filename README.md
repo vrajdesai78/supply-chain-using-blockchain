@@ -1,2 +1,3 @@
-# supply-chain-using-blockchain
-Supply Chain Management System built on Blockchain
+# Supply Chain Management System built on Blockchain
+
+Any kind of supply chain, whether in the food, apparel, or pharmaceutical industries, can use this platform. This platform's primary goal is to offer transparency and traceability. Any user can view the history of an item using our platform; for instance, if someone is buying an organic food item, they only need to scan a QR code. A person can view the entire history of a product, from the farm to the store, by scanning a QR code. This will make it easier for consumers to spot fake goods. No one will be able to alter the data because it will all be stored on the blockchain.
