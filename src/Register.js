@@ -1,8 +1,54 @@
-import React from 'react';
 import './style.css';
-import Reg from './images/reg.svg'
+import Reg from './images/reg.svg';
+// import db from './Firestore';
+// import { Link, useHistory } from "react-router-dom";
 
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useHistory } from "react-router-dom";
+import {
+  getFirestore,
+  query,
+  getDocs,
+  collection,
+  where,
+  addDoc,
+  Firestore,
+} from "firebase/firestore";
+
+import {
+  auth,
+  registerWithEmailAndPassword,
+  app,
+  writedata,
+  tablename
+  // addDoc
+  // db,
+} from "./firebase";
 function Register() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [user, loading, error] = useAuthState(auth);
+  // const history = useHistory();
+  const register = () => {
+    if (!name) alert("Please enter name");
+    registerWithEmailAndPassword(name, email, password);
+  };
+  useEffect(() => {
+    if (loading) return;
+    // if (user) history.replace("/dashboard");
+    if(user) {
+      tablename.doc(user.uid).set({
+        title: 'zkoder Tut#1',
+        description: 'Tut#1 Description'
+      });
+    // writedata(user.uid)
+ 
+
+     
+    }
+  }, [user, loading]);
   return (
     <div className="container">
       <div className="forms-container">
@@ -11,21 +57,32 @@ function Register() {
             <h2 className="title">Sign up</h2>
             <div className="input-field">
               <i className="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              <input
+               value={name}
+               onChange={(e) => setName(e.target.value)}
+              type="text" placeholder="Username" />
             </div>
             <div className="input-field">
               <i className="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              <input 
+               value={email}
+               onChange={(e) => setEmail(e.target.value)}
+              type="email" placeholder="Email" />
             </div>
             <div className="input-field">
               <i className="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              type="password" placeholder="Password" />
             </div>
             <div className="input-field">
               <i className="fas fa-lock"></i>
               <input type="password" placeholder="Confirm Password" />
             </div>
-            <input type="submit" className="btn" value="Sign up" />
+            <input 
+             onClick={register}
+            type="submit" className="btn" value="Sign up" />
 
           </form>
 
