@@ -21,7 +21,7 @@ import {
   registerWithEmailAndPassword,
   app,
   writedata,
-  tablename
+  
   // addDoc
   // db,
 } from "./firebase";
@@ -39,10 +39,7 @@ function Register() {
     if (loading) return;
     // if (user) history.replace("/dashboard");
     if(user) {
-      tablename.doc(user.uid).set({
-        title: 'zkoder Tut#1',
-        description: 'Tut#1 Description'
-      });
+    
     // writedata(user.uid)
  
 

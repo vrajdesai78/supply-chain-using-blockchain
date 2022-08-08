@@ -1,7 +1,24 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { connectWallet, getAccount } from "./utils/wallet";
 
 const Navbar = () => {
+  const [account, setAccount] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      // TODO 5.b - Get the active account
+      const account = await getAccount();
+      setAccount(account);
+    })();
+  }, []);
+
+  const onConnectWallet = async () => {
+    await connectWallet();
+    const account = await getAccount();
+    setAccount(account);
+  };
   return (
     <>
       <div className="container-fluid nav_bg">
@@ -80,7 +97,12 @@ const Navbar = () => {
                     </li>
 
                     
-
+<li className="nav-item">
+<button onClick={onConnectWallet} className="btn btn-outline-info">
+            {/* TODO 5.a - Show account address if wallet is connected */}
+            {account ? account : "Connect Wallet"}
+          </button>
+</li>
 
 
                   </ul>

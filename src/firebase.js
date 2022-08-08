@@ -79,7 +79,7 @@ const logInWithEmailAndPassword = async (email, password) => {
    
  
  
-    
+
     try{
       console.log("Inside try block")
       const docRef = await addDoc(collection(db, "Users"),{
@@ -126,6 +126,5 @@ const logInWithEmailAndPassword = async (email, password) => {
     registerWithEmailAndPassword,
     logout,
     addDoc,
-    tablename,
     writedata
   };
