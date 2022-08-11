@@ -10,7 +10,7 @@ import {
 
 export default function Hero() {
   return (
-    <Center minH='100vh'>
+    <Center minH='80vh'>
       <Stack
         textAlign={'center'}
         align={'center'}

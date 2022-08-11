@@ -11,11 +11,19 @@ import {
     useColorModeValue,
     Textarea,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
 export default function UpdateProduct() {
+
+    const [data, setData] = useState("");
+
+    const handleData = (e) => {
+        setData({ ...data, [e.target.name]: e.target.value });
+    };
+
     return (
         <Flex
-            minH={'100vh'}
+            minH={'80vh'}
             align={'center'}
             justify={'center'}
             bg={useColorModeValue('gray.50', 'gray.800')}
@@ -32,16 +40,16 @@ export default function UpdateProduct() {
                     bg={useColorModeValue('white', 'gray.700')}
                     boxShadow={'lg'}
                     p={8}
-                    w={['xs','sm']}
+                    w={['xs', 'sm']}
                 >
                     <Stack spacing={4}>
                         <FormControl id="product-id">
                             <FormLabel>Product Id</FormLabel>
-                            <Input type="number" />
+                            <Input type="number" name='id' onChange={handleData}/>
                         </FormControl>
                         <FormControl id="discription">
                             <FormLabel>Description Of Product</FormLabel>
-                            <Textarea></Textarea>
+                            <Textarea name='description' onChange={handleData}></Textarea>
                         </FormControl>
                         <Button
                             bg={'blue.400'}
