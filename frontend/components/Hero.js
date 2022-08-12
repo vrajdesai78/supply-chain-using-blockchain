@@ -38,7 +38,7 @@ export default function Hero() {
               _hover={{
                 bg: 'blue.500',
               }}
-              onClick={() => router.push('/showhistory')}
+              onClick={() => router.push('/ShowHistory')}
             >
               Track Product
             </Button>

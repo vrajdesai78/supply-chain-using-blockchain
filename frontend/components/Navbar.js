@@ -40,7 +40,7 @@ export default function Navbar() {
           <Text px='4' fontWeight='500' onClick={() => router.push('/')} cursor='pointer'>Home</Text>
           <Text px='4' fontWeight='500' onClick={() => router.push('/addproduct')} cursor='pointer'>Add Product</Text>
           <Text px='4' fontWeight='500' onClick={() => router.push('/updateproduct')} cursor='pointer'>Update Product</Text>
-          <Text px='4' fontWeight='500' onClick={() => router.push('/showhistory')} cursor='pointer'>Show History</Text>
+          <Text px='4' fontWeight='500' onClick={() => router.push('/ShowHistory')} cursor='pointer'>Show History</Text>
         </HStack>
         <Button onClick={onConnectWallet} variant='outline' colorScheme='linkedin'>
           {account

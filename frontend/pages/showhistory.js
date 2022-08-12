@@ -2,7 +2,7 @@ import { Button, Center, FormControl, HStack, Input, Stack, Table, TableContaine
 import React, { useState } from 'react';
 import { useToast } from '@chakra-ui/react'
 
-export default function showhistory() {
+export default function ShowHistory() {
 
     const toast = useToast();
     const [id, setId] = useState("");
