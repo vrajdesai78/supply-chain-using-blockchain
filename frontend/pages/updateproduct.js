@@ -11,22 +11,66 @@ import {
     useColorModeValue,
     Textarea,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { updateProduct } from '../utils/operations';
 
 export default function UpdateProduct() {
 
+    const [lat, setLat] = useState(null);
+    const [lng, setLng] = useState(null);
+    const [status, setStatus] = useState(null);
     const [data, setData] = useState("");
+
+    useEffect(() => {
+        getLocation()
+        console.log(lat, lng);
+    }, [!lat])
+
 
     const handleData = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
     };
 
+    const getLocation = () => {
+        if (!navigator.geolocation) {
+            setStatus('Geolocation is not supported by your browser');
+        } else {
+            setStatus('Locating...');
+            navigator.geolocation.getCurrentPosition((position) => {
+                setStatus(null);
+                setLat(position.coords.latitude.toString());
+                setLng(position.coords.longitude.toString());
+            }, () => {
+                setStatus('Unable to retrieve your location');
+            });
+        }
+    }
+
+    var currentTime = new Date();
+
+    var currentOffset = currentTime.getTimezoneOffset();
+
+    var ISTOffset = 330;   // IST offset UTC +5:30 
+
+    var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset) * 60000);
+
+    // ISTTime now represents the time in IST coordinates
+
+    var hoursIST = ISTTime.getHours()
+    var minutesIST = ISTTime.getMinutes()
+
+    var date = hoursIST + ":" + minutesIST
+
+    const updateData = () => {
+        updateProduct(lat, lng, parseInt(data.id), data.description, date);
+    }
+
     return (
         <Flex
-            minH={'80vh'}
+            // minH={'90vh'}
             align={'center'}
             justify={'center'}
-            bg={useColorModeValue('gray.50', 'gray.800')}
+        // bg={useColorModeValue('gray.50', 'gray.800')}
         >
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12}>
                 <Stack align={'center'}>
@@ -45,7 +89,7 @@ export default function UpdateProduct() {
                     <Stack spacing={4}>
                         <FormControl id="product-id">
                             <FormLabel>Product Id</FormLabel>
-                            <Input type="number" name='id' onChange={handleData}/>
+                            <Input type="number" name='id' onChange={handleData} />
                         </FormControl>
                         <FormControl id="discription">
                             <FormLabel>Description Of Product</FormLabel>
@@ -56,7 +100,9 @@ export default function UpdateProduct() {
                             color={'white'}
                             _hover={{
                                 bg: 'blue.500',
-                            }}>
+                            }}
+                            onClick={updateData}
+                        >
                             Submit
                         </Button>
                     </Stack>

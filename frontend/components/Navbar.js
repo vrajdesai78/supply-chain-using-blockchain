@@ -1,62 +1,55 @@
 import {
-    Box,
-    Flex,
-    Button,
-    useColorModeValue,
-    HStack,
-    Text,
+  Box,
+  Flex,
+  Button,
+  useColorModeValue,
+  HStack,
+  Text,
+  Heading,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
-import {
-    connectWallet,
-    getActiveAccount,
-    disconnectWallet,
-} from '../utils/wallet';
+import { connectWallet, getAccount } from "../utils/wallet";
 
 export default function Navbar() {
 
-    const router = useRouter();
+  const router = useRouter();
 
-    const [wallet, setWallet] = useState(null);
+  const [account, setAccount] = useState("");
 
-    const handleConnectWallet = async () => {
-        const { wallet } = await connectWallet();
-        setWallet(wallet);
-    };
-    const handleDisconnectWallet = async () => {
-        const { wallet } = await disconnectWallet();
-        setWallet(wallet);
-    };
+  useEffect(() => {
+    (async () => {
+      // TODO 5.b - Get the active account
+      const account = await getAccount();
+      setAccount(account);
+    })();
+  }, []);
 
-    useEffect(() => {
-        const getAccount = async () => {
-            const account = await getActiveAccount();
-            if (account) {
-                setWallet(account.address);
-            }
-        };
-        getAccount();
-    }, []);
+  // TODO 4.a - Create onConnectWallet function
+  const onConnectWallet = async () => {
+    await connectWallet();
+    const account = await getAccount();
+    setAccount(account);
+  };
 
-    return (
-        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-            <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                <Box>SupplyChain</Box>
-                <HStack alignItems='center'>
-                    <Text px='4' fontWeight='500' onClick={() => router.push('/')} cursor='pointer'>Home</Text>
-                    <Text px='4' fontWeight='500' onClick={() => router.push('/addproduct')} cursor='pointer'>Add Product</Text>
-                    <Text px='4' fontWeight='500' onClick={() => router.push('/updateproduct')} cursor='pointer'>Update Product</Text>
-                    <Text px='4' fontWeight='500' onClick={() => router.push('/showhistory')} cursor='pointer'>Show History</Text>
-                </HStack>
-                <Button onClick={wallet ? handleDisconnectWallet : handleConnectWallet}>
-                    {wallet
-                        ? wallet.slice(0, 4) +
-                        "..." +
-                        wallet.slice(wallet.length - 4, wallet.length)
-                        : "Connect"}
-                </Button>
-            </Flex>
-        </Box>
-    );
+  return (
+    <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Heading fontWeight='600' fontSize='xl'>SupplyChain</Heading>
+        <HStack alignItems='center'>
+          <Text px='4' fontWeight='500' onClick={() => router.push('/')} cursor='pointer'>Home</Text>
+          <Text px='4' fontWeight='500' onClick={() => router.push('/addproduct')} cursor='pointer'>Add Product</Text>
+          <Text px='4' fontWeight='500' onClick={() => router.push('/updateproduct')} cursor='pointer'>Update Product</Text>
+          <Text px='4' fontWeight='500' onClick={() => router.push('/showhistory')} cursor='pointer'>Show History</Text>
+        </HStack>
+        <Button onClick={onConnectWallet} variant='outline' colorScheme='linkedin'>
+          {account
+            ? account.slice(0, 4) +
+            "..." +
+            account.slice(account.length - 4, account.length)
+            : "Connect"}
+        </Button>
+      </Flex>
+    </Box>
+  );
 }

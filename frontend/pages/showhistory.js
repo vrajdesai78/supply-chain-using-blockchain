@@ -1,20 +1,34 @@
-import { Button, Center, FormControl, FormLabel, Heading, HStack, Input, Stack, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { Button, Center, FormControl, HStack, Input, Stack, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
+import React, { useState } from 'react';
+import { useToast } from '@chakra-ui/react'
 
 export default function showhistory() {
 
+    const toast = useToast();
     const [id, setId] = useState("");
     const [product, setProduct] = useState("");
+    const [status, setStatus] = useState("");
+
+    console.log(product);
 
     const getData = () => {
-        fetch('https://api.jakartanet.tzkt.io/v1/contracts/KT1T96VuVwC36kYXNRKcijbxwFCpLFLKUhVd/storage')
-            .then(res => res.json())
-            .then(data => setProduct(data));
+        if (!id) {
+            toast({
+                title: 'Please enter an id',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
+        } else {
+            fetch('https://api.jakartanet.tzkt.io/v1/contracts/KT1T96VuVwC36kYXNRKcijbxwFCpLFLKUhVd/storage')
+                .then(res => res.json())
+                .then(data => setProduct(data.productStatus[id]));
+        }
     }
 
     return (
-        <Center minH={'80vh'}>
-            <Stack>
+        <Center>
+            <Stack mt='20'>
                 <HStack>
                     <FormControl id="product-id">
                         <Input type="number" name='id' placeholder='Enter product id' onChange={(e) => setId(e.target.value)} />
@@ -37,17 +51,22 @@ export default function showhistory() {
                                 <Tr>
                                     <Th>Time</Th>
                                     <Th>Status description</Th>
-                                    <Th isNumeric>Latitute</Th>
+                                    <Th isNumeric>Latitude</Th>
                                     <Th isNumeric>Longitude</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
-                                <Tr>
-                                    <Td>2:00 PM</Td>
-                                    <Td>mdescription</Td>
-                                    <Td isNumeric>25.42340</Td>
-                                    <Td isNumeric>25.4234</Td>
-                                </Tr>
+                                {product && product.map(el => {
+                                    return (
+                                        <Tr>
+                                            <Td>{el.time}</Td>
+                                            <Td>{el.statusDescription}</Td>
+                                            <Td>{el.latitude}</Td>
+                                            <Td>{el.longitude}</Td>
+                                        </Tr>
+                                    )
+                                }
+                                )}
                             </Tbody>
                         </Table>
                     </TableContainer>

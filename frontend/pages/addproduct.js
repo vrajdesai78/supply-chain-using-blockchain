@@ -12,6 +12,7 @@ import {
     Textarea,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { addProduct } from '../utils/operations';
 
 export default function AddProduct() {
     const [data, setData] = useState("");
@@ -21,23 +22,16 @@ export default function AddProduct() {
     };
 
     const sendData = () => {
-        fetch('https://api.jakartanet.tzkt.io/v1/contracts/KT1T96VuVwC36kYXNRKcijbxwFCpLFLKUhVd/storage').then(res => res.json()).then(pro => console.log(pro))
-        // fetch("https://api.jakartanet.tzkt.io/v1/contracts/KT1T96VuVwC36kYXNRKcijbxwFCpLFLKUhVd/storage", {
-        //     mode: "no-cors",
-        //     method: "POST",
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify(data)
-        // }).then(res => {
-        //     console.log(res);
-        // });
+        addProduct(data.id, data.name, data.description);
     }
 
     return (
         <Flex
-            minH={'80vh'}
+            // minH={'80vh'}
             align={'center'}
             justify={'center'}
-            bg={useColorModeValue('gray.50', 'gray.800')}>
+        // bg={useColorModeValue('gray.50', 'gray.800')}
+        >
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} w={['xs', 'sm']}>
                 <Stack align={'center'}>
                     <Heading fontSize={'4xl'}>Add product</Heading>
@@ -51,21 +45,17 @@ export default function AddProduct() {
                     boxShadow={'lg'}
                     p={8}>
                     <Stack spacing={4}>
-                        <FormControl id="name">
-                            <FormLabel>Product Name</FormLabel>
-                            <Input type="text" name='name' onChange={handleData} />
-                        </FormControl>
                         <FormControl id="product-id">
                             <FormLabel>Product Id</FormLabel>
                             <Input type="number" name='id' onChange={handleData} />
                         </FormControl>
-                        <FormControl id="quantity">
-                            <FormLabel>Quantity Of Product</FormLabel>
-                            <Input type="number" name='quantity' onChange={handleData} />
+                        <FormControl id="name">
+                            <FormLabel>Product Name</FormLabel>
+                            <Input type="text" name='name' onChange={handleData} />
                         </FormControl>
-                        <FormControl id="discription">
+                        <FormControl id="description">
                             <FormLabel>Description Of Product</FormLabel>
-                            <Textarea name='discription' onChange={handleData}></Textarea>
+                            <Textarea name='description' onChange={handleData}></Textarea>
                         </FormControl>
                         <Button
                             bg={'blue.400'}
