@@ -1,4 +1,3 @@
-// TODO 6 - Call buy_ticket entrypoint in the Lottery contract
 import { tezos } from "./tezos";
 
 export const addProduct = async (productID, productName, description) => {
@@ -15,10 +14,10 @@ export const addProduct = async (productID, productName, description) => {
 
 export const updateProduct = async (latitude, longitude, productID, statusDescription, time) => {
     console.log(latitude, longitude, productID, statusDescription, time);
-    console.log(typeof time);
+    console.log(typeof latitude);
     try {
         const contractInstance = await tezos.wallet.at("KT1T96VuVwC36kYXNRKcijbxwFCpLFLKUhVd");
-        const op = await contractInstance.methods.update_status(latitude, longitude, productID, statusDescription, time).send();
+        const op = await contractInstance.methods.update_status(latitude,longitude,productID,statusDescription,time.toString()).send();
         await op.confirmation();
     } catch (err) {
         throw err;

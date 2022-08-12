@@ -1,44 +1,57 @@
 import {
+  Button,
   Flex,
-  Container,
   Heading,
+  Image,
   Stack,
   Text,
-  Button,
-  Center
 } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 export default function Hero() {
+
+  const router = useRouter();
+
   return (
-    <Center minH='80vh'>
-      <Stack
-        textAlign={'center'}
-        align={'center'}
-        spacing={{ base: 8, md: 10 }}
-        py={{ base: 20, md: 28 }}>
-        <Heading
-          fontWeight={600}
-          fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
-          lineHeight={'110%'}>
-          Meeting scheduling{' '}
-          <Text as={'span'} color={'orange.400'}>
-            made easy
+    <Stack minH={'90vh'} direction={{ base: 'column', md: 'row' }}>
+      <Flex p={8} flex={1} align={'center'} justify={'center'}>
+        <Stack spacing={6} w={'full'} maxW={'lg'}>
+          <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>
+            <Text
+              as={'span'}
+              position={'relative'}>
+              LogChain
+            </Text>
+            <br />{' '}
+            <Text color={'blue.400'} as={'span'}>
+              SupplyChain Management System
+            </Text>{' '}
+          </Heading>
+          <Text fontSize={{ base: 'md', lg: 'lg' }} color={'gray.500'}>
+            Track your products just by using product id.
           </Text>
-        </Heading>
-        <Text color={'gray.500'} maxW={'3xl'}>
-          Never miss a meeting. Never be late for one too. Keep track of your
-          meetings and receive smart reminders in appropriate times. Read your
-          smart “Daily Agenda” every morning.
-        </Text>
-        <Button
-          rounded={'full'}
-          px={6}
-          colorScheme={'orange'}
-          bg={'orange.400'}
-          _hover={{ bg: 'orange.500' }}>
-          Get started
-        </Button>
-      </Stack>
-    </Center>
+          <Stack direction={{ base: 'column', md: 'row' }} spacing={4}>
+            <Button
+              rounded={'full'}
+              bg={'blue.400'}
+              color={'white'}
+              _hover={{
+                bg: 'blue.500',
+              }}
+              onClick={() => router.push('/showhistory')}
+            >
+              Track Product
+            </Button>
+          </Stack>
+        </Stack>
+      </Flex>
+      <Flex flex={1}>
+        <Image
+          alt={'Login Image'}
+          objectFit={'contain'}
+          src='svg.svg'
+        />
+      </Flex>
+    </Stack>
   );
 }

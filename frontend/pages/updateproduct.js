@@ -23,9 +23,7 @@ export default function UpdateProduct() {
 
     useEffect(() => {
         getLocation()
-        console.log(lat, lng);
     }, [!lat])
-
 
     const handleData = (e) => {
         setData({ ...data, [e.target.name]: e.target.value });
@@ -46,20 +44,20 @@ export default function UpdateProduct() {
         }
     }
 
-    var currentTime = new Date();
+    // var currentTime = new Date();
 
-    var currentOffset = currentTime.getTimezoneOffset();
+    // var currentOffset = currentTime.getTimezoneOffset();
 
-    var ISTOffset = 330;   // IST offset UTC +5:30 
+    // var ISTOffset = 330;   // IST offset UTC +5:30 
 
-    var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset) * 60000);
+    // var ISTTime = new Date(currentTime.getTime() + (ISTOffset + currentOffset) * 60000);
 
-    // ISTTime now represents the time in IST coordinates
+    // // ISTTime now represents the time in IST coordinates
 
-    var hoursIST = ISTTime.getHours()
-    var minutesIST = ISTTime.getMinutes()
+    // var hoursIST = ISTTime.getHours()
+    // var minutesIST = ISTTime.getMinutes()
 
-    var date = hoursIST + ":" + minutesIST
+    var date = Math.floor((Date.now())/1000);
 
     const updateData = () => {
         updateProduct(lat, lng, parseInt(data.id), data.description, date);

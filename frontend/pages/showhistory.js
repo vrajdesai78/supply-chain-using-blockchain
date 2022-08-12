@@ -9,8 +9,6 @@ export default function showhistory() {
     const [product, setProduct] = useState("");
     const [status, setStatus] = useState("");
 
-    console.log(product);
-
     const getData = () => {
         if (!id) {
             toast({
